@@ -1,8 +1,23 @@
 library("tidyverse")
 library("leaflet")
 
-Places <- readxl::read_excel("Places.xlsx") %>% 
-  mutate("Country" = factor(Country) )
+Places <- readxl::read_excel("Places.xlsx", col_types = c("text","text", "text",
+                                                          "numeric", "numeric", 
+                                                          "numeric", "date", "text")) %>% 
+  mutate("Country" = factor(Country) ) %>% 
+  mutate("Info" = paste("Place:", Place, "<br/>", 
+                        "Date:", Date, "<br/>", 
+                        "Year:", Year, "<br/>",
+                        "People:", People, "<br/>",
+                        "Memory:", Memory))
+
+
+
+train_map <- read.csv("trains/Interrail.csv") 
+train_map <- train_map %>% 
+  as_tibble() %>% 
+  rename("lat" = colnames(train_map)[1], "lon" = colnames(train_map)[2] )
+
 
 
 quakeIcons <- iconList(Switzerland = makeIcon("icons/Swiss.jfif", iconWidth = 24, iconHeight = 24),
@@ -12,7 +27,10 @@ quakeIcons <- iconList(Switzerland = makeIcon("icons/Swiss.jfif", iconWidth = 24
                        Italy = makeIcon("icons/It.jfif", iconWidth = 24, iconHeight = 24),
                        Scotland = makeIcon("icons/Sc.jfif", iconWidth = 24, iconHeight = 24),
                        Kosovo = makeIcon("icons/Ko.jfif", iconWidth = 24, iconHeight = 24),
-                       Greece = makeIcon("icons/gr.jfif", iconWidth = 24, iconHeight = 24))
+                       Greece = makeIcon("icons/gr.jfif", iconWidth = 24, iconHeight = 24),
+                       France = makeIcon("icons/Fra.jfif", iconWidth = 24, iconHeight = 24),
+                       Irland = makeIcon("icons/Irl.jfif", iconWidth = 24, iconHeight = 24),
+                       Spain = makeIcon("icons/Sp.jfif", iconWidth = 24, iconHeight = 24) )
 
 
 
@@ -23,6 +41,15 @@ quakeIcons <- iconList(Switzerland = makeIcon("icons/Swiss.jfif", iconWidth = 24
              lng = ~Longitude,
              label = Places$Place, 
              clusterOptions = markerClusterOptions(),
-             popup = Places$People,
+             popup = Places$Info,
              icon = ~quakeIcons[Country],
-             options = markerOptions(opacity = .6)) 
+             options = markerOptions(opacity = .6)) %>% 
+    addPolylines(
+      data = train_map,
+      lng = ~lon, 
+      lat = ~lat,
+      weight = 3,
+      opacity = 3
+    ) 
+
+  
