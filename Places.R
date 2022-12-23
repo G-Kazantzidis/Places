@@ -40,16 +40,16 @@ quakeIcons <- iconList(Switzerland = makeIcon("icons/Swiss.jfif", iconWidth = 24
              lat = ~Latitude,
              lng = ~Longitude,
              label = Places$Place, 
-             clusterOptions = markerClusterOptions(),
+             clusterOptions = markerClusterOptions(spiderLegPolylineOptions = list(weight = .5)),
              popup = Places$Info,
              icon = ~quakeIcons[Country],
-             options = markerOptions(opacity = .6)) %>% 
-    addPolylines(
-      data = train_map,
-      lng = ~lon, 
-      lat = ~lat,
-      weight = 3,
-      opacity = 3
-    ) 
+             options = markerOptions(opacity = .6)) 
+    # addPolylines(
+    #   data = train_map,
+    #   lng = ~lon, 
+    #   lat = ~lat,
+    #   weight = 3,
+    #   opacity = 3
+    # ) 
 
   
