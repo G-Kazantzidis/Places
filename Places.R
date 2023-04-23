@@ -30,7 +30,8 @@ quakeIcons <- iconList(Switzerland = makeIcon("icons/Swiss.jfif", iconWidth = 24
                        Greece = makeIcon("icons/gr.jfif", iconWidth = 24, iconHeight = 24),
                        France = makeIcon("icons/Fra.jfif", iconWidth = 24, iconHeight = 24),
                        Irland = makeIcon("icons/Irl.jfif", iconWidth = 24, iconHeight = 24),
-                       Spain = makeIcon("icons/Sp.jfif", iconWidth = 24, iconHeight = 24) )
+                       Spain = makeIcon("icons/Sp.jfif", iconWidth = 24, iconHeight = 24),
+                       Norway = makeIcon("icons/No.jfif", iconWidth = 24, iconHeight = 24))
 
 
 
@@ -40,17 +41,11 @@ quakeIcons <- iconList(Switzerland = makeIcon("icons/Swiss.jfif", iconWidth = 24
              lat = ~Latitude,
              lng = ~Longitude,
              label = Places$Place, 
-             clusterOptions = markerClusterOptions(spiderLegPolylineOptions = list(weight = .5)),
+             clusterOptions = markerClusterOptions(spiderLegPolylineOptions = list(weight = .5),
+                                                   freezeAtZoom = "maxKeepSpiderify"),
              popup = Places$Info,
              icon = ~quakeIcons[Country],
              options = markerOptions(opacity = .6)) 
-    # addPolylines(
-    #   data = train_map,
-    #   lng = ~lon, 
-    #   lat = ~lat,
-    #   weight = 3,
-    #   opacity = 3
-    # ) 
 
   People_count <- Places %>% 
     filter(Year > 2015) %>% 
