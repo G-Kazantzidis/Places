@@ -64,4 +64,10 @@ quakeIcons <- iconList(Switzerland = makeIcon("icons/Swiss.jfif", iconWidth = 24
     xlab(label = "Peple")+
     theme_minimal()
   
+  Places %>% 
+    filter(Year > 2015) %>% 
+    separate_rows(People, sep = ", ") %>% 
+    filter(People == "Sofia") %>% 
+    select(Place, Date, Memory)
+  
   
