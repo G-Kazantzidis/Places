@@ -31,7 +31,8 @@ quakeIcons <- iconList(Switzerland = makeIcon("icons/Swiss.jfif", iconWidth = 24
                        France = makeIcon("icons/Fra.jfif", iconWidth = 24, iconHeight = 24),
                        Irland = makeIcon("icons/Irl.jfif", iconWidth = 24, iconHeight = 24),
                        Spain = makeIcon("icons/Sp.jfif", iconWidth = 24, iconHeight = 24),
-                       Norway = makeIcon("icons/No.jfif", iconWidth = 24, iconHeight = 24))
+                       Norway = makeIcon("icons/No.jfif", iconWidth = 24, iconHeight = 24),
+                       Denmark = makeIcon("icons/Den.jfif", iconWidth = 24, iconHeight = 24))
 
 
 
