@@ -3,7 +3,7 @@ library("leaflet")
 
 Places <- readxl::read_excel("Places.xlsx", col_types = c("text","text", "text",
                                                           "numeric", "numeric", 
-                                                          "numeric", "date", "text")) %>% 
+                                                          "numeric", "date","date", "text")) %>% 
   mutate("Country" = factor(Country) ) %>% 
   mutate("Info" = paste("Place:", Place, "<br/>", 
                         "Date:", Date, "<br/>", 
@@ -47,7 +47,7 @@ quakeIcons <- iconList(Switzerland = makeIcon("icons/Swiss.jfif", iconWidth = 24
              popup = Places$Info,
              icon = ~quakeIcons[Country],
              options = markerOptions(opacity = .6)) 
-
+#### People count ####
   People_count <- Places %>% 
     filter(Year > 2015) %>% 
     select(People) %>% 
@@ -70,6 +70,12 @@ quakeIcons <- iconList(Switzerland = makeIcon("icons/Swiss.jfif", iconWidth = 24
     separate_rows(People, sep = ", ") %>% 
     filter(People == "Sofia") %>% 
     select(Place, Date, Memory)
+  
+#### 2023 places ####
+
+ Places %>% 
+    filter(Year == "2023") %>% view()
+  
   
 #### Sofia and me map ####
   
