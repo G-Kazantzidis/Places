@@ -80,7 +80,7 @@ quakeIcons <- iconList(Switzerland = makeIcon("icons/Swiss.jfif", iconWidth = 24
 #### Sofia and me map ####
   
   Sofia_Places <- Places %>% 
-    filter(str_detect(People, "Nina"))
+    filter(str_detect(People, "Gemma"))
   
   leaflet() %>%
     addProviderTiles(providers$CartoDB.Positron) %>% 
