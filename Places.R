@@ -80,7 +80,7 @@ quakeIcons <- iconList(Switzerland = makeIcon("icons/Swiss.jfif", iconWidth = 24
 #### Sofia and me map ####
   
   Sofia_Places <- Places %>% 
-    filter(str_detect(People, "Gemma"))
+    filter(str_detect(People, "Nina"))
   
   leaflet() %>%
     addProviderTiles(providers$CartoDB.Positron) %>% 
@@ -88,8 +88,8 @@ quakeIcons <- iconList(Switzerland = makeIcon("icons/Swiss.jfif", iconWidth = 24
                lat = ~Latitude,
                lng = ~Longitude,
                label = Sofia_Places$Place, 
-               # clusterOptions = markerClusterOptions(spiderLegPolylineOptions = list(weight = .5),
-               #                                       freezeAtZoom = "maxKeepSpiderify"),
+               clusterOptions = markerClusterOptions(spiderLegPolylineOptions = list(weight = .5),
+                                                     freezeAtZoom = "maxKeepSpiderify"),
                popup = Sofia_Places$Info,
                icon = ~quakeIcons[Country],
                options = markerOptions(opacity = .6)) 
