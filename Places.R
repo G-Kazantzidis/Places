@@ -61,7 +61,7 @@ quakeIcons <- iconList(Switzerland = makeIcon("icons/Swiss.jfif", iconWidth = 24
     filter(n>4) %>% 
     ggplot(aes(y = n, x = reorder(People, -n) ))+
     geom_bar(position="dodge", stat="identity", col = "lightgreen", fill = "lightblue", alpha = .8)+
-    ylab(label = "Number of trips")+
+    ylab(label = "Number of places")+
     xlab(label = "Peple")+
     theme_minimal()
   
