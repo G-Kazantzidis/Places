@@ -33,7 +33,8 @@ quakeIcons <- iconList(Switzerland = makeIcon("icons/Swiss.jfif", iconWidth = 24
                        Spain = makeIcon("icons/Sp.jfif", iconWidth = 24, iconHeight = 24),
                        Norway = makeIcon("icons/No.jfif", iconWidth = 24, iconHeight = 24),
                        Denmark = makeIcon("icons/Den.jfif", iconWidth = 24, iconHeight = 24),
-                       Germany = makeIcon("icons/Ge.jfif", iconWidth = 24, iconHeight = 24))
+                       Germany = makeIcon("icons/Ge.jfif", iconWidth = 24, iconHeight = 24),
+                       Cyprus = makeIcon("icons/cy.jfif", iconWidth = 24, iconHeight = 24))
 
 
 
@@ -81,7 +82,7 @@ quakeIcons <- iconList(Switzerland = makeIcon("icons/Swiss.jfif", iconWidth = 24
 #### Sofia and me map ####
   
   Sofia_Places <- Places %>% 
-    # filter(str_detect(People, "Nina"))
+    filter(str_detect(People, "Maria"))
     filter(Year == "2023")
   
   leaflet() %>%
