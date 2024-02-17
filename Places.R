@@ -3,7 +3,7 @@ library("leaflet")
 
 Places <- readxl::read_excel("Places.xlsx", col_types = c("text","text", "text",
                                                           "numeric", "numeric", 
-                                                          "numeric", "date","date", "text")) %>% 
+                                                          "numeric", "date", "text")) %>% 
   mutate("Country" = factor(Country) ) %>% 
   mutate("Info" = paste("Place:", Place, "<br/>", 
                         "Date:", Date, "<br/>", 
