@@ -51,7 +51,7 @@ quakeIcons <- iconList(Switzerland = makeIcon("icons/Swiss.jfif", iconWidth = 24
              options = markerOptions(opacity = .6)) 
 #### People count ####
   People_count <- Places %>% 
-    filter(Year = 2023) %>% 
+    filter(Year %in% c(2022, 2023, 2024)) %>%
     select(People) %>% 
     separate_rows(People, sep = ", ") %>%
     drop_na() %>% 
