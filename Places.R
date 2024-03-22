@@ -12,14 +12,6 @@ Places <- readxl::read_excel("Places.xlsx", col_types = c("text","text", "text",
                         "Memory:", Memory))
 
 
-
-train_map <- read.csv("trains/Interrail.csv") 
-train_map <- train_map %>% 
-  as_tibble() %>% 
-  rename("lat" = colnames(train_map)[1], "lon" = colnames(train_map)[2] )
-
-
-
 quakeIcons <- iconList(Switzerland = makeIcon("icons/Swiss.jfif", iconWidth = 24, iconHeight = 24),
                        Netherlands = makeIcon("icons/Neth.jfif", iconWidth = 24, iconHeight = 24),
                        Belgium = makeIcon("icons/Be.jfif", iconWidth = 24, iconHeight = 24),
