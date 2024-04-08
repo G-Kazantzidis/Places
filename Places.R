@@ -152,11 +152,7 @@ quakeIcons <- iconList(Switzerland = makeIcon("icons/Swiss.jfif", iconWidth = 24
                popup = Places$Info,
                icon = ~quakeIcons[Country],
                options = markerOptions(opacity = .6),
-               group = Places$Trip_name)   %>%
-    addLayersControl(
-      overlayGroups = unique(Places$Trip_name),
-      options = layersControlOptions(collapsed = FALSE)
-    ) 
+               group = Places$Trip_name)  
   
   
   # Places per trip 
