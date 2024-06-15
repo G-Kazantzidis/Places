@@ -117,8 +117,7 @@ library("leaflet")
   #### Sofia and me map ####
   
   Sofia_Places <- Places %>% 
-    filter(str_detect(People, "Nina"))
-  filter(Year == "2023")
+  filter(Country == "Switzerland")
   
   leaflet() %>%
     addProviderTiles(providers$CartoDB.Positron) %>% 
@@ -126,8 +125,8 @@ library("leaflet")
                lat = ~Latitude,
                lng = ~Longitude,
                label = Sofia_Places$Place, 
-               clusterOptions = markerClusterOptions(spiderLegPolylineOptions = list(weight = .5),
-                                                     freezeAtZoom = "maxKeepSpiderify"),
+               # clusterOptions = markerClusterOptions(spiderLegPolylineOptions = list(weight = .5),
+               #                                       freezeAtZoom = "maxKeepSpiderify"),
                popup = Sofia_Places$Info,
                icon = ~quakeIcons[Country],
                options = markerOptions(opacity = .6)) 
