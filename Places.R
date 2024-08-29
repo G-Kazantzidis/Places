@@ -85,7 +85,7 @@ library("leaflet")
   
   #### People count ####
   People_count <- Places %>% 
-    filter(Year %in% c(2022, 2023, 2024)) %>%
+    filter(Year %in% c( 2024)) %>%
     select(People) %>% 
     separate_rows(People, sep = ", ") %>%
     drop_na() %>% 
@@ -106,7 +106,7 @@ library("leaflet")
     filter(Year > 2015) %>% 
     separate_rows(People, sep = ", ") %>% 
     filter(People == "Sofia") %>% 
-    select(Place, Date, Memory)
+    select(Place, Date, Memory) %>% view()
   
   #### 2023 places ####
   
@@ -117,6 +117,7 @@ library("leaflet")
   #### Sofia and me map ####
   
   Sofia_Places <- Places %>% 
+    filter(Year == "2024")
   filter(Country == "Switzerland")
   
   leaflet() %>%
