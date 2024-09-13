@@ -1,5 +1,6 @@
 library("tidyverse")
-library("leaflet")
+library(leaflet)
+library(leaflet.extras)
 
 
   
@@ -66,21 +67,28 @@ library("leaflet")
                group = Places$Trip_name)  
   
   
-  # Places per trip 
+  
   leaflet() %>%
-    addProviderTiles(providers$CartoDB.Positron) %>% 
-    addMarkers(data = Places,
-               lat = ~Latitude,
-               lng = ~Longitude,
-               label = Places$Place, 
-               popup = Places$Info,
-               icon = ~quakeIcons[Country],
-               options = markerOptions(opacity = .6),
-               group = Places$Trip_name)   %>%
-    addLayersControl(
-      overlayGroups = unique(Places$Trip_name),
-      options = layersControlOptions(collapsed = FALSE)
-    ) 
+  addProviderTiles(providers$CartoDB.Positron) %>%
+  addMarkers(data = filter(Places, Year == 2020), # Just an example for 2020
+             lat = ~Latitude,
+             lng = ~Longitude,
+             label = ~Place,
+             popup = ~Info,
+             icon = ~quakeIcons[Country],
+             group = "2020") %>%
+  addMarkers(data = filter(Places, Year == 2021),
+             lat = ~Latitude,
+             lng = ~Longitude,
+             label = ~Place,
+             popup = ~Info,
+             icon = ~quakeIcons[Country],
+             group = "2021") %>%
+  addLayersControl(
+    overlayGroups = c("2020", "2021"),
+    options = layersControlOptions(collapsed = FALSE)
+  )
+
   
   
   #### People count ####
@@ -134,5 +142,21 @@ library("leaflet")
   
   
   ########################
+  install.packages("htmlwidgets")
+  library(htmlwidgets)
+  # Assuming you have your leaflet map stored in the variable `my_map`
+  my_map <-   leaflet() %>%
+    addProviderTiles(providers$CartoDB.Positron) %>% 
+    addMarkers(data = Places,
+               lat = ~Latitude,
+               lng = ~Longitude,
+               label = Places$Place, 
+               clusterOptions = markerClusterOptions(spiderLegPolylineOptions = list(weight = .5),
+                                                     freezeAtZoom = "maxKeepSpiderify"),
+               popup = Places$Info,
+               icon = ~quakeIcons[Country],
+               options = markerOptions(opacity = .6),
+               group = Places$Trip_name)  
   
+  saveWidget(my_map, "my_travel_map.html", selfcontained = TRUE)
   
