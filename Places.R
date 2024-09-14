@@ -111,9 +111,8 @@ library(leaflet.extras)
     theme_minimal()
   
   Places %>% 
-    filter(Year > 2015) %>% 
     separate_rows(People, sep = ", ") %>% 
-    filter(People == "Sofia") %>% 
+    filter(People %in% c("Sofia", "Nina")) %>% 
     select(Place, Date, Memory) %>% view()
   
   #### 2023 places ####
@@ -124,9 +123,9 @@ library(leaflet.extras)
   
   #### Sofia and me map ####
   
-  Sofia_Places <- Places %>% 
-    filter(Year == "2024")
-  filter(Country == "Switzerland")
+  Sofia_Places <-   Places  %>%  
+    separate_rows(People, sep = ", ") %>% 
+    filter(People %in% c("Sofia", "Nina"))
   
   leaflet() %>%
     addProviderTiles(providers$CartoDB.Positron) %>% 
@@ -134,11 +133,37 @@ library(leaflet.extras)
                lat = ~Latitude,
                lng = ~Longitude,
                label = Sofia_Places$Place, 
-               # clusterOptions = markerClusterOptions(spiderLegPolylineOptions = list(weight = .5),
-               #                                       freezeAtZoom = "maxKeepSpiderify"),
+               clusterOptions = markerClusterOptions(spiderLegPolylineOptions = list(weight = .5),
+                                                     freezeAtZoom = "maxKeepSpiderify"),
                popup = Sofia_Places$Info,
                icon = ~quakeIcons[Country],
                options = markerOptions(opacity = .6)) 
+  
+  
+  leaflet() %>%
+    addProviderTiles(providers$CartoDB.Positron) %>%
+    addMarkers(data = filter(Sofia_Places, People == "Nina"), # Just an example for 2020
+               lat = ~Latitude,
+               lng = ~Longitude,
+               label = ~Place,
+               popup = ~Info,
+               icon = ~quakeIcons[Country],
+               group = "Nina",
+               clusterOptions = markerClusterOptions(spiderLegPolylineOptions = list(weight = .5),
+                                                     freezeAtZoom = "maxKeepSpiderify")) %>%
+    addMarkers(data = filter(Sofia_Places, People == "Sofia"),
+               lat = ~Latitude,
+               lng = ~Longitude,
+               label = ~Place,
+               popup = ~Info,
+               icon = ~quakeIcons[Country],
+               group = "Sofia",
+               clusterOptions = markerClusterOptions(spiderLegPolylineOptions = list(weight = .5),
+                                                     freezeAtZoom = "maxKeepSpiderify")) %>%
+    addLayersControl(
+      overlayGroups = c("Nina", "Sofia"),
+      options = layersControlOptions(collapsed = FALSE)
+    )
   
   
   ########################
