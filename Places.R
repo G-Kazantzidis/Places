@@ -48,7 +48,8 @@ library(leaflet.extras)
                          Denmark = makeIcon("icons/Den.jfif", iconWidth = 24, iconHeight = 24),
                          Germany = makeIcon("icons/Ge.jfif", iconWidth = 24, iconHeight = 24),
                          Cyprus = makeIcon("icons/cy.jfif", iconWidth = 24, iconHeight = 24),
-                         Canada = makeIcon("icons/Ca.jfif", iconWidth = 24, iconHeight = 24))
+                         Canada = makeIcon("icons/Ca.jfif", iconWidth = 24, iconHeight = 24),
+                         Austria = makeIcon("icons/Au.jfif", iconWidth = 24, iconHeight = 24))
   
   
   # All places with zoom grouping 
@@ -70,14 +71,14 @@ library(leaflet.extras)
   
   leaflet() %>%
   addProviderTiles(providers$CartoDB.Positron) %>%
-  addMarkers(data = filter(Places, Year == 2020), # Just an example for 2020
+  addMarkers(data = filter(Places, Year == 2024), # Just an example for 2020
              lat = ~Latitude,
              lng = ~Longitude,
              label = ~Place,
              popup = ~Info,
              icon = ~quakeIcons[Country],
              group = "2020") %>%
-  addMarkers(data = filter(Places, Year == 2021),
+  addMarkers(data = filter(Places, Year == 2024),
              lat = ~Latitude,
              lng = ~Longitude,
              label = ~Place,
@@ -124,8 +125,9 @@ library(leaflet.extras)
   #### Sofia and me map ####
   
   Sofia_Places <-   Places  %>%  
-    separate_rows(People, sep = ", ") %>% 
-    filter(People %in% c("Sofia", "Nina"))
+    separate_rows(People, sep = ", ") %>%
+    filter(People %in% c("Sofia"))
+    # filter(Year == "2024")
   
   leaflet() %>%
     addProviderTiles(providers$CartoDB.Positron) %>% 
@@ -133,8 +135,8 @@ library(leaflet.extras)
                lat = ~Latitude,
                lng = ~Longitude,
                label = Sofia_Places$Place, 
-               clusterOptions = markerClusterOptions(spiderLegPolylineOptions = list(weight = .5),
-                                                     freezeAtZoom = "maxKeepSpiderify"),
+               # clusterOptions = markerClusterOptions(spiderLegPolylineOptions = list(weight = .5),
+               #                                       freezeAtZoom = "maxKeepSpiderify"),
                popup = Sofia_Places$Info,
                icon = ~quakeIcons[Country],
                options = markerOptions(opacity = .6)) 
