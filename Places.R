@@ -6,8 +6,11 @@ library(leaflet.extras)
   
   Places <- readxl::read_excel("Places_V2.xlsx", col_types = c("text","text", "text", "text", "text",
                                                             "numeric", "numeric", 
-                                                            "numeric", "date", "text"))
+                                                            "numeric", "date", "text", "text"))
   
+  Places <- read.csv("Places_V3.csv")
+
+
   dup_pl <- Places %>% 
     filter(duplicated(Place)) %>% 
     distinct(Place)
@@ -54,7 +57,7 @@ library(leaflet.extras)
   
   # All places with zoom grouping 
   
-  leaflet() %>%
+  map <- leaflet() %>%
     addProviderTiles(providers$CartoDB.Positron) %>% 
     addMarkers(data = Places,
                lat = ~Latitude,
@@ -65,61 +68,14 @@ library(leaflet.extras)
                popup = Places$Info,
                icon = ~quakeIcons[Country],
                options = markerOptions(opacity = .6),
-               group = Places$Trip_name)  
+               group = Places$Trip_name) 
+  map
   
+  for (route in routes) {
+    map <- map %>% addPolylines(data = route, color = "blue", weight = 3, opacity = 0.7)
+  }
   
-  
-  leaflet() %>%
-  addProviderTiles(providers$CartoDB.Positron) %>%
-  addMarkers(data = filter(Places, Year == 2024), # Just an example for 2020
-             lat = ~Latitude,
-             lng = ~Longitude,
-             label = ~Place,
-             popup = ~Info,
-             icon = ~quakeIcons[Country],
-             group = "2020") %>%
-  addMarkers(data = filter(Places, Year == 2024),
-             lat = ~Latitude,
-             lng = ~Longitude,
-             label = ~Place,
-             popup = ~Info,
-             icon = ~quakeIcons[Country],
-             group = "2021") %>%
-  addLayersControl(
-    overlayGroups = c("2020", "2021"),
-    options = layersControlOptions(collapsed = FALSE)
-  )
-
-  
-  
-  #### People count ####
-  People_count <- Places %>% 
-    filter(Year %in% c( 2024)) %>%
-    select(People) %>% 
-    separate_rows(People, sep = ", ") %>%
-    drop_na() %>% 
-    mutate(People = factor(People)) %>%
-    count(People) %>% 
-    arrange(n) 
-  
-  
-  People_count %>% 
-    filter(n>4) %>% 
-    ggplot(aes(y = n, x = reorder(People, -n) ))+
-    geom_bar(position="dodge", stat="identity", col = "lightgreen", fill = "lightblue", alpha = .8)+
-    ylab(label = "Number of places")+
-    xlab(label = "Peple")+
-    theme_minimal()
-  
-  Places %>% 
-    separate_rows(People, sep = ", ") %>% 
-    filter(People %in% c("Sofia", "Nina")) %>% 
-    select(Place, Date, Memory) %>% view()
-  
-  #### 2023 places ####
-  
-  Places %>% 
-    filter(Year == "2023") %>% view()
+  map
   
   
   #### Sofia and me map ####
@@ -167,23 +123,6 @@ library(leaflet.extras)
       options = layersControlOptions(collapsed = FALSE)
     )
   
+
   
-  ########################
-  install.packages("htmlwidgets")
-  library(htmlwidgets)
-  # Assuming you have your leaflet map stored in the variable `my_map`
-  my_map <-   leaflet() %>%
-    addProviderTiles(providers$CartoDB.Positron) %>% 
-    addMarkers(data = Places,
-               lat = ~Latitude,
-               lng = ~Longitude,
-               label = Places$Place, 
-               clusterOptions = markerClusterOptions(spiderLegPolylineOptions = list(weight = .5),
-                                                     freezeAtZoom = "maxKeepSpiderify"),
-               popup = Places$Info,
-               icon = ~quakeIcons[Country],
-               options = markerOptions(opacity = .6),
-               group = Places$Trip_name)  
-  
-  saveWidget(my_map, "my_travel_map.html", selfcontained = TRUE)
   
