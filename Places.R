@@ -54,7 +54,8 @@ quakeIcons <- iconList(Switzerland = makeIcon("icons/Swiss.jfif", iconWidth = 24
                        Germany = makeIcon("icons/Ge.jfif", iconWidth = 24, iconHeight = 24),
                        Cyprus = makeIcon("icons/cy.jfif", iconWidth = 24, iconHeight = 24),
                        Canada = makeIcon("icons/Ca.jfif", iconWidth = 24, iconHeight = 24),
-                       Austria = makeIcon("icons/Au.jfif", iconWidth = 24, iconHeight = 24))
+                       Austria = makeIcon("icons/Au.jfif", iconWidth = 24, iconHeight = 24),
+                       Luxembourg = makeIcon("icons/Lu.jfif", iconWidth = 24, iconHeight = 24))
 
 
 # All places with zoom grouping 
@@ -85,7 +86,7 @@ for (route in routes) {
   map <- map %>% addPolylines(data = route, color = "blue", weight = 3, opacity = 0.7)
 }
 
-map
+
 
 
 hike_routes <- list()
@@ -99,6 +100,19 @@ for (route in hike_routes) {
   map <- map %>% addPolylines(data = route, color = "orange", weight = 3, opacity = 0.7)
 }
 
+
+sail_routes <- list()
+gpx_files_sails <- list.files(path = "Sailing", pattern = "\\.gpx$", full.names = TRUE)
+
+for (i in seq_along(gpx_files_sails)) {
+  sail_routes[[i]] <- rgdal::readOGR(gpx_files_sails[i], layer = "tracks", verbose = FALSE)
+}
+
+for (route in sail_routes) {
+  map <- map %>% addPolylines(data = route, color = "cyan", weight = 3, opacity = 0.7)
+}
+
+
 map
 
 
@@ -120,12 +134,13 @@ map
 
 
 
-
+"<br/>"
 #### Sofia and me map ####
 
 Sofia_Places <-   Places  %>%  
-  separate_rows(People, sep = ", ") %>%
-  filter(People %in% c("Nina") & Country == "Switzerland")
+  mutate(People_by_trip = str_replace(People_by_trip, "<br/>", ", ")) %>%
+  separate_rows(People_by_trip, sep = ", ") %>%
+  filter(People_by_trip %in% c("Sabri", "Sabrina") )
 # filter(Year == "2024")
 
 leaflet() %>%
