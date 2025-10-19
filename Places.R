@@ -55,6 +55,7 @@ quakeIcons <- iconList(Switzerland = makeIcon("icons/Swiss.jfif", iconWidth = 24
                        Cyprus = makeIcon("icons/cy.jfif", iconWidth = 24, iconHeight = 24),
                        Canada = makeIcon("icons/Ca.jfif", iconWidth = 24, iconHeight = 24),
                        Austria = makeIcon("icons/Au.jfif", iconWidth = 24, iconHeight = 24),
+                       Croatia = makeIcon("icons/Cr.jfif", iconWidth = 24, iconHeight = 24),
                        Luxembourg = makeIcon("icons/Lu.jfif", iconWidth = 24, iconHeight = 24))
 
 
@@ -140,7 +141,7 @@ map
 Sofia_Places <-   Places  %>%  
   mutate(People_by_trip = str_replace(People_by_trip, "<br/>", ", ")) %>%
   separate_rows(People_by_trip, sep = ", ") %>%
-  filter(People_by_trip %in% c("Sabri", "Sabrina") )
+  filter(People_by_trip %in% c("Patricia") )
 # filter(Year == "2024")
 
 leaflet() %>%
