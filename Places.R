@@ -141,8 +141,8 @@ map
 Sofia_Places <-   Places  %>%  
   mutate(People_by_trip = str_replace(People_by_trip, "<br/>", ", ")) %>%
   separate_rows(People_by_trip, sep = ", ") %>%
-  filter(People_by_trip %in% c("Sofia") )
-# filter(Year == "2024")
+  # filter(People_by_trip %in% c("Sofia") ) %>% 
+  filter(Year == "2025")
 
 leaflet() %>%
   addProviderTiles(providers$CartoDB.Positron) %>% 
@@ -193,9 +193,18 @@ Places  %>%
   tally() %>% 
   arrange(-n)
 
+Places  %>%  
+  mutate(People_by_trip = str_replace(People_by_trip, "<br/>", ", ")) %>%
+  separate_rows(People_by_trip, sep = ", ") %>%
+  ungroup() %>% 
+  distinct(People_by_trip, Place) %>% 
+  group_by(People_by_trip) %>% 
+  tally() %>% 
+  arrange(-n)
+
 
 Places  %>%  
   mutate(People_by_trip = str_replace(People_by_trip, "<br/>", ", ")) %>%
   separate_rows(People_by_trip, sep = ", ") %>%
-  filter(People_by_trip %in% c("Kimon") ) %>% ungroup() %>% distinct(Country)
+  filter(People_by_trip %in% c("Sabrina") ) %>% ungroup() %>% distinct(Country)
 # filter(Year == "2024")
